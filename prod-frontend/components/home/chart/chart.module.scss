@@ -1,0 +1,73 @@
+.chart {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2.4rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chartText {
+  margin-bottom: 2.4rem;
+  font-weight: 200;
+}
+
+.highlightFirstLetter:first-letter {
+  background: var(--background-light);
+  padding: 1rem;
+  border-radius: 0.4rem;
+
+  font-size: var(--text-md);
+  font-weight: bold;
+
+  margin-right: 0.6rem;
+
+  float: left;
+}
+
+
+
+.stats {
+  position: relative;
+}
+
+.statColumn {
+  h4 {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 2.4rem;
+    span {
+      font-size: var(--text-md);
+      font-weight: bold;
+      position: relative;
+      margin-left: 0.8rem;
+    }
+  }
+}
+
+
+
+/* components/Dropdown.module.css */
+.dropdownContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown {
+  background-color: #333; /* Dark grey background */
+  color: #fff; /* White text */
+  border: 1px solid #444; /* Slightly lighter border */
+  border-radius: 1rem; /* Rounded corners */
+  padding: 8px 12px; /* Padding for spacing */
+  font-size: 16px; /* Font size for readability */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.dropdown option {
+  background-color: #333; /* Dark grey background for options */
+  color: #fff; /* White text for options */
+}

@@ -1,0 +1,58 @@
+.contactWrapper {
+  margin-bottom: 6.75rem;
+}
+
+.cryptoList {
+  margin-bottom: 2.4rem;
+  padding: 0 1.2rem 1.2rem;
+  border-bottom: 1px solid var(--background-light);
+}
+
+.positive {
+  --brand: #00ff00; /* Green */
+}
+
+.zero {
+  --brand: #808080; /* Gray */
+}
+.negative {
+  --brand: #ff0000; /* Red */
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 1.2rem;
+}
+
+.title {
+  font-size: var(--text-md);
+  font-weight: bold;
+}
+
+.price {
+  color: var(--brand);
+  font-weight: bold;
+}
+
+.description {
+  flex-wrap: wrap;
+
+  margin-bottom: 1.8rem;
+  font-weight: 200;
+}
+
+.tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+/* styles.css */
+@media (max-width: 768px) {
+  .description{
+    font-size: 15px; /* shrink the font */
+  }
+}

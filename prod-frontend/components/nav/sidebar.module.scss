@@ -1,0 +1,68 @@
+
+// components/YourComponent.module.css
+.shrinkOnMobile {
+  display: block; /* Default visibility */
+  background: "var(--background-dark)"
+}
+
+.sideBar {
+  background: var(--background-dark);
+
+  height: 100vh;
+
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  z-index: 20;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  a {
+    height: 100px;
+
+    flex-shrink: 0;
+
+    writing-mode: vertical-lr;
+    font-size: var(--text-sm);
+    font-weight: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+
+    border-right: 1px solid transparent;
+
+    transition: 0.1s all;
+    width: 100%;
+  }
+
+  a:hover {
+    background: var(--background);
+    border-right: 1px solid var(--brand);
+    opacity: 1;
+  }
+
+  .selected {
+    background: var(--background);
+    border-right: 1px solid var(--brand);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .shrinkOnMobile {
+    max-width: 3.75rem; /* shrink on screens smaller than 768px */
+    background: "var(--background-dark)";
+  }
+
+}
+
+.sideBar::-webkit-scrollbar {
+  display: none;
+}

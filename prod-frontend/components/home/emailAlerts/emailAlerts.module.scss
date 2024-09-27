@@ -1,0 +1,116 @@
+.contentWrapper {
+  max-width: 700px;
+  margin-top: 3.75rem;
+
+  border-radius: 1.2rem;
+}
+
+.contentTitle {
+  font-size: var(--text-2xl);
+  text-align: center;
+  font-weight: 900;
+  line-height: 1;
+
+  span {
+    color: var(--brand);
+  }
+
+  @media (max-width: 768px) {
+    font-size: var(--text-xl);
+  }
+}
+
+.contentDescription {
+  text-align: center;
+  font-weight: 200;
+  margin: 2.4rem 0;
+
+  a {
+    color: var(--brand);
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+
+.buttonEmail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8 rem;
+  color: white;
+  
+  width: fit-content;
+  
+  font-size: var(--text-md);
+  
+  margin-top: 22px;
+  
+  transition: 0.5s;
+
+  padding: 0.75rem 5rem;
+  border-radius: 1rem;
+  background: var(--background-light);
+}
+.buttonEmail:hover {
+  color: var(--brand);
+}
+
+
+/* formcss */
+.form {
+  width: fit-content;
+  margin: 0 auto;
+  background-color: var(--background-light);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #ccc;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #444; /* Slightly lighter border */
+  border-radius: 1rem;
+  font-size: 16px;
+  background-color: #333; /* Set background color for dropdowns */
+  color: #fff; /* Set text color for dropdowns */
+}
+
+.input:focus,
+.select:focus {
+  border-color:  var(--brand);
+  outline: none;
+}
+
+
+.thankYouMessage {
+  text-align: center;
+  color:  var(--brand);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  position: relative;
+  padding:.8rem;
+}
+
+.text_color {
+  color: var(--brand);
+}
