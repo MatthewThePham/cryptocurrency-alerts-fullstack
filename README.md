@@ -1,3 +1,5 @@
+[Watch the video](https://github.com/MatthewThePham/cryptocurrency-alerts-fullstack/blob/main/websiteDemo.mp4)
+
 ## Hello, this is the first localhost commit
 
 Frontend setup....
