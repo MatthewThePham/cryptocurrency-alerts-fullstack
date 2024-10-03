@@ -42,18 +42,10 @@ public class httpCosmosController {
     }
 
 
-
-    //////////////// testing
-    private final ScheduledTaskService apiService;
-    public httpCosmosController(com.crypto.cryptobackend.ScheduledTaskService scheduledTaskService) {
-        apiService = scheduledTaskService;
+    // testing a simple string return
+    @GetMapping("/test")
+    public String sayHello() {
+        return "Hello World";
     }
-    @GetMapping("/fetch")
-    public String fetchData() {
-        apiService.performScheduledTask();
-        return "Data fetched and stored successfully.";
-    }
-
-
 
 }

@@ -3,6 +3,7 @@ package com.crypto.cryptobackend;
 import com.crypto.cryptobackend.model.emailAlertsModel;
 import com.crypto.cryptobackend.model.cryptoWrapperModel;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Flux;
 
-import javax.annotation.PostConstruct;  //testing
+//import javax.annotation.PostConstruct;  //testing
 import java.util.*;
 
 @Service
@@ -26,6 +27,7 @@ public class ScheduledTaskService {
     @Value("${ENV_API_KEY}")
     private String apiKey;
     private final WebClient webClient;
+
 
 
     @Autowired
@@ -42,16 +44,19 @@ public class ScheduledTaskService {
     }
 
     //testing
+    /*
     @PostConstruct
     public void init() {
         // Execute task immediately on startup
         performScheduledTask();
         performEmail();
     }
+    */
+
 
 
     // Scheduled to run every hour api pull
-    //@Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void performScheduledTask() {
         System.out.println("Scheduled task executed at: " + new Date());
 
@@ -65,10 +70,9 @@ public class ScheduledTaskService {
                     .bodyToFlux(cryptoWrapperModel.class);  // Map the response body to a model
 
             response.subscribe(responseBody -> {
-                        if(responseBody == null || responseBody.getBitcoin() == null){
+                        if (responseBody == null || responseBody.getBitcoin() == null) {
                             System.out.println("Response Body is empty or null");
-                        }
-                        else {
+                        } else {
                             try {
 
                                 Mono<cryptoWrapperModel> savedData = cosmosRepositoryData.save(responseBody);
@@ -101,9 +105,11 @@ public class ScheduledTaskService {
         }
     }
 
+
+    //TODO need to add delete user in database if email is sent
     //Scheduled to check every hour
-    //@Scheduled(cron = "0 0 * * * *")
-    public void performEmail(){
+    @Scheduled(cron = "0 0 * * * *")
+    public void performEmail() {
         //////////////////// email attempt
         Flux<cryptoWrapperModel> responseBody = cosmosRepositoryData.findAll();
         responseBody
@@ -111,63 +117,62 @@ public class ScheduledTaskService {
                 .next()  // Get the first element from the sorted stream
                 .subscribe(compareField -> {
 
-                System.out.println("This is the first entry : " + compareField.getBitcoin() + "," + compareField.getEthereum() + "," + compareField.getChainlink());
-                Flux<emailAlertsModel> entities = emailRepository.findAll();
+                    System.out.println("This is the first entry : " + compareField.getBitcoin() + "," + compareField.getEthereum() + "," + compareField.getChainlink());
+                    Flux<emailAlertsModel> entities = emailRepository.findAll();
 
-                entities
-                        .subscribe(entity -> {
-                            double currentTickerPrice = 0;
-                            double percentChangedLimit = 0.0;
+                    entities
+                            .subscribe(entity -> {
+                                double currentTickerPrice = 0;
+                                double percentChangedLimit = 0.0;
 
-                            double pricePercent =  Math.round((((entity.getPriceTarget()-entity.getCurrentPriceAtTheTime()) /  entity.getCurrentPriceAtTheTime()) * 100) );
+                                double pricePercent = Math.round((((entity.getPriceTarget() - entity.getCurrentPriceAtTheTime()) / entity.getCurrentPriceAtTheTime()) * 100));
 
-
-                            if(Objects.equals(entity.getTicker(), "BTC")){
-                                //currentTickerPrice = compareField.getBitcoin().getUsd();
-                                currentTickerPrice = 80000;  //test value for BTC
-                            }
-                            else if (Objects.equals(entity.getTicker(), "ETH")){
-                                currentTickerPrice = compareField.getEthereum().getUsd();
-                                currentTickerPrice = 1000;  //test value for ETH
-                            }
-                            else{
-                                currentTickerPrice = compareField.getChainlink().getUsd();
-                            }
-
-                            System.out.println("Reached here ");
-
-                            percentChangedLimit = (currentTickerPrice * (pricePercent *.01)) + currentTickerPrice;
-
-                            System.out.println("Percent Changed " + pricePercent);
-                            System.out.print("Price limit  " + percentChangedLimit);
-                            System.out.print("Price target  " + entity.getPriceTarget());
-
-                            if(pricePercent>0){  //meaning it is +5, +10 or +15
-                                if(percentChangedLimit < entity.getPriceTarget()){  //if currentPriceTicker (2624.51) < priceTarget (5593.43), that means they are asking for positive percent. IE Price increased a certain threshold.
-
-                                    String subject = "Price Alert: "  + entity.getTicker() + " is now $" + currentTickerPrice;
-                                    String text = "The price of " + entity.getTicker() + " has increased above " + pricePercent + "%. Current price: $" +currentTickerPrice + ". Requested Price was $" +  entity.getPriceTarget() + " or greater.";
-                                    emailService.sendEmail("matto475@gmail.com", subject, text);
-                                    //emailService.sendEmail("example@test.com", subject, text);  //enter real dynamic email here, using test for now
-
-                                    System.out.println("Reached email " + subject + text);
+                                if (Objects.equals(entity.getTicker(), "BTC")) {
+                                    currentTickerPrice = compareField.getBitcoin().getUsd();
+                                    //currentTickerPrice = 80000;  //test value for BTC
+                                } else if (Objects.equals(entity.getTicker(), "ETH")) {
+                                    currentTickerPrice = compareField.getEthereum().getUsd();
+                                    //currentTickerPrice = 1000;  //test value for ETH
+                                } else {
+                                    currentTickerPrice = compareField.getChainlink().getUsd();
                                 }
-                            }else{
 
-                                if(percentChangedLimit < entity.getPriceTarget() ){   //if currentPriceTicker (2624.51) > priceTarget (2230.83), that means they are asking for negative percent. IE Price falls below a certain threshold.
-                                    String subject = "Price Alert: " + entity.getTicker() + " is now " + currentTickerPrice;
-                                    String text = "The price of " + entity.getTicker() + " has dropped below " + pricePercent + "%. Current price: $" + currentTickerPrice + ". Requested price was $" + entity.getPriceTarget() + " or less.";
-                                    emailService.sendEmail("matto475@gmail.com", subject, text);
-                                    //emailService.sendEmail("example@test.com", subject, text); //enter real dynamic email here, using test for now
+                                percentChangedLimit = (currentTickerPrice * (pricePercent * .01)) + currentTickerPrice;
 
-                                    System.out.println("Reached email " + subject + text);
+                                System.out.println("Percent Changed " + pricePercent);
+                                System.out.print("Price limit  " + percentChangedLimit);
+                                System.out.print("Price target  " + entity.getPriceTarget());
 
+                                if (pricePercent > 0) {  //meaning it is +5, +10 or +15
+                                    if (percentChangedLimit < entity.getPriceTarget()) {  //if currentPriceTicker (2624.51) < priceTarget (5593.43), that means they are asking for positive percent. IE Price increased a certain threshold.
+
+                                        String subject = "Price Alert: " + entity.getTicker() + " is now $" + currentTickerPrice;
+                                        String text = "The price of " + entity.getTicker() + " has increased above " + pricePercent + "%. Current price: $" + currentTickerPrice + ". Requested Price was $" + entity.getPriceTarget() + " or greater.";
+                                        emailService.sendEmail(entity.getEmail(),subject, text);
+                                        //emailService.sendEmail("example@test.com", subject, text);  //enter real dynamic email here, using test for now
+
+                                        System.out.println("Reached email " + subject + text);
+
+                                        emailRepository.delete(entity);
+                                        System.out.println("deleting user...");
+                                    }
+                                } else {
+                                    if (percentChangedLimit < entity.getPriceTarget()) {   //if currentPriceTicker (2624.51) > priceTarget (2230.83), that means they are asking for negative percent. IE Price falls below a certain threshold.
+                                        String subject = "Price Alert: " + entity.getTicker() + " is now " + currentTickerPrice;
+                                        String text = "The price of " + entity.getTicker() + " has dropped below " + pricePercent + "%. Current price: $" + currentTickerPrice + ". Requested price was $" + entity.getPriceTarget() + " or less.";
+                                        emailService.sendEmail(entity.getEmail(),subject, text);
+                                        //emailService.sendEmail("example@test.com", subject, text); //enter real dynamic email here, using test for now
+
+                                        System.out.println("Reached email " + subject + text);
+
+                                        emailRepository.delete(entity);
+                                        System.out.println("deleting user...");
+                                    }
                                 }
-                            }
-                        }, error -> {
-                            System.err.println("Error processing entities: " + error.getMessage());
-                        });
-        });
+                            }, error -> {
+                                System.err.println("Error processing entities: " + error.getMessage());
+                            });
+                });
 
 ///////////////////
     }

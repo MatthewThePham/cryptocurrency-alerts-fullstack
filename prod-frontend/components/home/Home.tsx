@@ -14,13 +14,13 @@ export const Home  = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const apiUrl = process.env.CACHED_DB_COSMOS_URL;
+  const apiUrl = process.env.APIURL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //const response = await fetch(`${apiUrl}`); // Adjust the API endpoint as necessary
-        const response = await fetch('http://localhost:8080/api/last-24'
+        const response = await fetch(`${apiUrl}`  // Adjust the API endpoint as necessary
+        //const response = await fetch('http://localhost:8080/api/last-24'
           ,{method:'GET',
             headers:{Accept: 'application/json','Content-Type': 'application/json'}}); // Adjust the API endpoint as necessary
         if (!response.ok) {
