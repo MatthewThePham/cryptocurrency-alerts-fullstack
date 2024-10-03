@@ -3,7 +3,7 @@ import { SideBar } from "../nav/SideBar";
 import styles from "./home.module.scss";
 import { Heading } from "../nav/Heading";
 import { Chart } from "./chart/Chart";
-import { CryptoList } from "./CryptoList/CryptoList";
+import { CryptoList } from "./cryptoList/CryptoList";
 import { EmailAlerts } from "./emailAlerts/EmailAlerts";
 
 import { useState, useEffect } from 'react';
@@ -14,12 +14,13 @@ export const Home  = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const apiUrl = process.env.APIURL;
+  //NEXT_PUBLIC naming convention needs to be followed
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${apiUrl}`  // Adjust the API endpoint as necessary
+        const response = await fetch(`${apiUrl}` // Adjust the API endpoint as necessary
         //const response = await fetch('http://localhost:8080/api/last-24'
           ,{method:'GET',
             headers:{Accept: 'application/json','Content-Type': 'application/json'}}); // Adjust the API endpoint as necessary
