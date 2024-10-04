@@ -53,8 +53,6 @@ public class ScheduledTaskService {
     }
     */
 
-
-
     // Scheduled to run every hour api pull
     @Scheduled(cron = "0 0 * * * *")
     public void performScheduledTask() {
@@ -105,8 +103,6 @@ public class ScheduledTaskService {
         }
     }
 
-
-    //TODO need to add delete user in database if email is sent
     //Scheduled to check every hour
     @Scheduled(cron = "0 0 * * * *")
     public void performEmail() {

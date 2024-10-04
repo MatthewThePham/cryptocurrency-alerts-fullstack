@@ -11,12 +11,15 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    //todo, adding queueing system for rate limiting, so emails aren't all sent at once.
+
+
     public void sendEmail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
-        message.setFrom("alertingprices@outlook.com"); // Set the sender email
+        message.setFrom("alertingprice@outlook.com"); // Set the sender email
         mailSender.send(message);
     }
 }

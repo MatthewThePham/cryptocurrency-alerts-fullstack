@@ -96,13 +96,6 @@ export const EmailAlerts = ({ data }: Props) =>  {
 
     console.log("Price ticker has changed for "+ formData.priceTarget)
   }, [formData.ticker]),[formData.priceTarget];
-  
-  /*
-    // Update pricetarget testing...
-    useEffect(() => {
-      console.log("Price ticker has changed for "+ formData.priceTarget)
-    }, [formData.priceTarget]);
-  */
 
 
   // Handle input changes, sets the JSON payload based on dropdowns
@@ -165,7 +158,6 @@ export const EmailAlerts = ({ data }: Props) =>  {
             {" "} Recieve email which only sends if price is triggered in 30 days.
           </p>
         </Reveal>
-        <Reveal width="100%">
 
 
       <div className={styles.container}>
@@ -226,18 +218,15 @@ export const EmailAlerts = ({ data }: Props) =>  {
             </form>
     ) : (
         <Reveal width="100%">
-
-        <div className={styles.thankYouMessage}>
-          <h1>Thank You!</h1>
-          <p>Your form has been submitted successfully.</p>
-        </div>
-
+          <div className={styles.thankYouMessage}>
+            <h1>Thank You!</h1>
+            <p>Your form has been submitted successfully.</p>
+          </div>
         </Reveal>
     )}
     </div>
 
 
-        </Reveal>
       </div>
     </section>
   );

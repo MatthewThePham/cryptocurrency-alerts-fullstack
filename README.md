@@ -1,4 +1,6 @@
-[Watch the video](https://github.com/MatthewThePham/cryptocurrency-alerts-fullstack/blob/main/websiteDemo.mp4)
+## Live deployment 
+
+https://cryptocurrency-alerts-fullstack.vercel.app/
 
 ## Hello, this is the first localhost commit
 

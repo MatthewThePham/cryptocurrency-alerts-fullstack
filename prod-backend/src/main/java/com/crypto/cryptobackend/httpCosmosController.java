@@ -17,11 +17,9 @@ public class httpCosmosController {
 
     @Autowired
     private CosmosRepositoryData cosmosRepositoryData;
-
     @Autowired
     private EmailRepository emailRepository;
 
-   // @CrossOrigin(origins = "localhost", allowedHeaders = "*", methods = { RequestMethod.GET })
     @GetMapping("/last-24")
     public Flux<cryptoWrapperModel> getLast20Entries() {
         return cosmosRepositoryData.findAll().take(24);
@@ -32,15 +30,11 @@ public class httpCosmosController {
     public ResponseEntity<Mono<emailAlertsModel>> createItem(@RequestBody emailAlertsModel item) {
 
         // Save the item to Cosmos DB
-        //email_alerts savedItem = emailRepository.save(item);
         Mono<emailAlertsModel> savedItem = emailRepository.save(item);
 
         // Return a response entity with the saved item and HTTP status 201 (Created)
-        //return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
         return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
-
     }
-
 
     // testing a simple string return
     @GetMapping("/test")

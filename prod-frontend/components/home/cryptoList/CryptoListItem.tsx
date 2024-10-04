@@ -50,7 +50,6 @@ export const CryptoListItem = ({
       <Reveal>
         <p className={styles.description}>{description}</p>        
       </Reveal>
-      <Reveal>
         <div className={styles.tech}>
           {tech.map((item) => (
             <span key={item} className="chip">
@@ -58,7 +57,6 @@ export const CryptoListItem = ({
             </span>
           ))}
         </div>
-      </Reveal>
     </div>
   );
 };
