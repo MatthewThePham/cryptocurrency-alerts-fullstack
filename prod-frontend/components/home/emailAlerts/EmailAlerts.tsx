@@ -15,6 +15,7 @@ export const EmailAlerts = ({ data }: Props) =>  {
 
   const [submitted, setSubmitted] = useState(false); // State to manage form submission
 
+
   // State to store form data
   const [formData, setFormData] = useState({
     email: '',
@@ -24,14 +25,19 @@ export const EmailAlerts = ({ data }: Props) =>  {
   });
 
   const tickers = ['BTC', 'ETH', 'LINK']
+  
+  type CryptoKeys = 'BTC' | 'ETH' | 'LINK';
+  function getCryptoData(key: CryptoKeys) {
+      return priceRanges[key];
+  }
 
   // State for price range based on ticker
-  const [priceRange, setpriceRanges] = useState([]);
+  const [priceRange, setpriceRanges] = useState<string[]>([]);
 
 
   // Mapping of prices to percent change ranges
   //const prices = ['-15%', '-10%','-5%','+5%', '+10%','+15%'];
-  const priceRanges = {
+  const priceRanges : { [key in CryptoKeys]: string[] } = {
     'BTC' : [
       limitDecimalPoints((data.bitcoin.usd*-.15)+data.bitcoin.usd),
       limitDecimalPoints((data.bitcoin.usd*-.10)+data.bitcoin.usd),
@@ -85,7 +91,7 @@ export const EmailAlerts = ({ data }: Props) =>  {
       formData.priceTarget = limitDecimalPoints((data.chainlink.usd*-.15)+data.chainlink.usd)
     }
 
-    const range = priceRanges[formData.ticker] || [];  //sets the range of price target dropdown to the corresponding ticker dropdown
+    const range = getCryptoData(formData.ticker as CryptoKeys) || []; // Type assertion  //priceRanges[formData.ticker] || [];  //sets the range of price target dropdown to the corresponding ticker dropdown
     setpriceRanges(range);
 
     console.log("Price ticker has changed for "+ formData.priceTarget)
@@ -189,7 +195,7 @@ export const EmailAlerts = ({ data }: Props) =>  {
                 {
                   priceRange.map((priceTarget, index) => (
                   <option key={index} value={priceTarget}>
-                    {"$" + priceTarget} {"(" + gainOrLoss(priceTarget,formData.currentPriceAtTheTime) + "%)"}
+                    {"$" + priceTarget} {"(" + gainOrLoss(parseFloat(priceTarget),formData.currentPriceAtTheTime) + "%)"}
                   </option>
                   ))
                 }

@@ -74,9 +74,11 @@ export const Chart = ({ dataList }: Props) => {
       responsive: true,
       plugins: {
         legend: {
-          position: 'top',
+          display: true,
+          position: 'top' as const,  // Type assertion to a literal type
         },
         tooltip: {
+          enabled: true,
           callbacks: {
             label: function(tooltipItem: { raw: any; }) {
               return `USD: $${tooltipItem.raw}`;
