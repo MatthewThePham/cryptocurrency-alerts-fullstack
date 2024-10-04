@@ -3,14 +3,19 @@ import { CryptoListItem } from "./CryptoListItem";
 import styles from "./cryptoList.module.scss";
 
 import React from 'react';
+import { CryptoData } from "../models/CryptoData";
 
-export const CryptoList = ({ data }) => {
+interface Props {
+  data: CryptoData;
+}
+
+export const CryptoList = ({ data }: Props) => {
 
   const cryptoList = [
     {
       title: "Bitcoin",
-      price: data.bitcoin.usd.toLocaleString(),
-      time: data.bitcoin.usd_24h_change.toFixed(2),
+      usd: data.bitcoin.usd.toLocaleString(),
+      usd_24h_change: data.bitcoin.usd_24h_change.toFixed(2),
       description:
         "First cryptocurrency built on blockchain technology used for transactions outside the control of any one group or entity.",
       tech: [
@@ -20,8 +25,8 @@ export const CryptoList = ({ data }) => {
     },
     {
       title: "Ethereum",
-      price: data.ethereum.usd.toLocaleString(),
-      time: data.ethereum.usd_24h_change.toFixed(2),
+      usd: data.ethereum.usd.toLocaleString(),
+      usd_24h_change: data.ethereum.usd_24h_change.toFixed(2),
       description:
         "Proof-of-Stake blockchain that powers decentralized applications (dApps) through smart contracts.",
       tech: [
@@ -31,8 +36,8 @@ export const CryptoList = ({ data }) => {
     },
     {
       title: "Chainlink",
-      price: data.chainlink.usd.toLocaleString(),
-      time: data.chainlink.usd_24h_change.toFixed(2),
+      usd: data.chainlink.usd.toLocaleString(),
+      usd_24h_change: data.chainlink.usd_24h_change.toFixed(2),
       description:
         "Framework for building Decentralized Oracle Networks (DONs) that bring real-world data onto blockchain networks.",
       tech: [

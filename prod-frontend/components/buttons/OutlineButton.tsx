@@ -1,7 +1,7 @@
 import styles from "./outlinebutton.module.scss";
 
 interface Props {
-  children: string | JSX.Element;
+  children: string[];
   onClick?: () => void;
 }
 

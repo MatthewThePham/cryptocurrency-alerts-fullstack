@@ -1,11 +1,14 @@
 import styles from "./heading.module.scss";
-import { OutlineButton } from "../buttons/OutlineButton";
-import { MyLinks } from "@/components/nav/components/MyLinks";
-import { useEffect, useState } from "react";
+import { OutlineButton } from "../../buttons/OutlineButton";
+import { MyLinks } from "./components/MyLinks";
+import { CryptoData } from "../models/CryptoData";
 
-export const Heading = ({ data }) => {
 
-  
+interface Props {
+  data: CryptoData;
+}
+
+export const Heading = ({ data }: Props) => {  
   return (
     <header className={styles.heading}>
       <MyLinks/>

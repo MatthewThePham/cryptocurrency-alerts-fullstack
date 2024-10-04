@@ -24,28 +24,35 @@ ChartJS.register(LineElement, CategoryScale, LinearScale,PointElement, Title, To
 import { AiFillCode } from "react-icons/ai";
 import { useState } from 'react';
 
-export const Chart = ({ dataParameter }) => {
+import { CryptoData } from '../models/CryptoData';
+
+interface Props {
+  dataList: CryptoData[];
+}
+
+export const Chart = ({ dataList }: Props) => {
 
     const [selected, setSelected] = useState('Bitcoin (BTC)');
     //const optionDropdown = ['Bitcoin (BTC)', 'Ethereum (ETH)', 'Chainlink (LINK)'];
     const optionDropdown = ['Bitcoin (BTC)', 'Ethereum (ETH)', 'Chainlink (LINK)'];
-    const handleChange = (event) => {
+    
+    const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
       setSelected(event.target.value);     // sets optionDropdown for the dropdown
     };
 
     let labels;
     let bitcoinPrices;
     if(selected=='Bitcoin (BTC)'){
-       labels = dataParameter.map(item => new Date(item.bitcoin.last_updated_at* 1000).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}));
-       bitcoinPrices = dataParameter.map(item => item.bitcoin.usd);
+       labels = dataList.map(item => new Date(item.bitcoin.last_updated_at* 1000).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}));
+       bitcoinPrices = dataList.map(item => item.bitcoin.usd);
     }
     else if(selected=='Ethereum (ETH)'){
-      labels = dataParameter.map(item => new Date(item.ethereum.last_updated_at* 1000).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}));
-      bitcoinPrices = dataParameter.map(item => item.ethereum.usd);
+      labels = dataList.map(item => new Date(item.ethereum.last_updated_at* 1000).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}));
+      bitcoinPrices = dataList.map(item => item.ethereum.usd);
     }
     else if(selected=='Chainlink (LINK)'){
-      labels = dataParameter.map(item => new Date(item.chainlink.last_updated_at* 1000).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}));
-      bitcoinPrices = dataParameter.map(item => item.chainlink.usd);
+      labels = dataList.map(item => new Date(item.chainlink.last_updated_at* 1000).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}));
+      bitcoinPrices = dataList.map(item => item.chainlink.usd);
     }
 
 
@@ -71,7 +78,7 @@ export const Chart = ({ dataParameter }) => {
         },
         tooltip: {
           callbacks: {
-            label: function(tooltipItem) {
+            label: function(tooltipItem: { raw: any; }) {
               return `USD: $${tooltipItem.raw}`;
             }
           }

@@ -4,27 +4,27 @@ import styles from "./cryptoList.module.scss";
 
 interface Props {
   title: string;
-  price: string;
-  time: number;
+  usd: string;
+  usd_24h_change: string;
   description: string;
   tech: string[];
 }
 
 export const CryptoListItem = ({
   title,
-  price,
-  time,
+  usd,
+  usd_24h_change,
   description,
   tech,
   
 }: Props) => {
 
-  const getClassName = (val: number): string => {
-    if (val < 0.00) return styles.negative;
-    if (val === 0.00 ) return styles.zero;
+  const getClassName = (val: string): string => {
+    if (parseFloat(val) < 0.00) return styles.negative;
+    if (parseFloat(val) === 0.00 ) return styles.zero;
     return styles.positive;
   };
-  const className = getClassName(time);
+  const className = getClassName(usd_24h_change);
 
   return (
     <div className={`${styles.cryptoList}  ${className}`}>
@@ -37,14 +37,14 @@ export const CryptoListItem = ({
         <Reveal>
           <div>
            <span>Daily </span>
-            <span className={styles.price}>{time}%</span>
+            <span className={styles.price}>{usd_24h_change}%</span>
           </div>
         </Reveal>
       </div>
 
       <div className={styles.heading}>
         <Reveal>
-          <span className={styles.price}>${price}</span>
+          <span className={styles.price}>${usd}</span>
         </Reveal>
       </div>
       <Reveal>

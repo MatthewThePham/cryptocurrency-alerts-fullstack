@@ -1,12 +1,17 @@
 import { Reveal } from "@/components/utils/Reveal";
 import styles from "./emailAlerts.module.scss";
 import { AiFillMail } from "react-icons/ai";
-import Link from "next/link";
 
 
 import { useState, useEffect  } from 'react';
 
-export const EmailAlerts = ({ data }) =>  {
+import { CryptoData } from '../models/CryptoData';
+
+interface Props {
+  data: CryptoData;
+}
+
+export const EmailAlerts = ({ data }: Props) =>  {
 
   const [submitted, setSubmitted] = useState(false); // State to manage form submission
 
@@ -20,7 +25,7 @@ export const EmailAlerts = ({ data }) =>  {
 
   const tickers = ['BTC', 'ETH', 'LINK']
 
-  // State for age range based on name
+  // State for price range based on ticker
   const [priceRange, setpriceRanges] = useState([]);
 
 
@@ -55,7 +60,7 @@ export const EmailAlerts = ({ data }) =>  {
       limitDecimalPoints((data.chainlink.usd*.15)+data.chainlink.usd)]
   };
 
-  function limitDecimalPoints(value) {
+  function limitDecimalPoints(value: number) {
     if (isNaN(value)) {
       throw new Error('Input must be a number');
     }
@@ -63,7 +68,7 @@ export const EmailAlerts = ({ data }) =>  {
   }
 
   
-  // Update age range when the selected name changes
+  // Update price range when the selected ticker changes
   useEffect(() => {
     if(formData.ticker=='ETH'){
       formData.currentPriceAtTheTime = data.ethereum.usd
@@ -95,7 +100,7 @@ export const EmailAlerts = ({ data }) =>  {
 
 
   // Handle input changes, sets the JSON payload based on dropdowns
-  const handleChange = (event) => {
+  const handleChange = (event: { target: { id: string; value: string; }; }) => {
     const { id, value } = event.target;
 
     setFormData(prevState => ({
@@ -105,14 +110,18 @@ export const EmailAlerts = ({ data }) =>  {
   };
 
   //helper function for displaying percent in price target
-  const gainOrLoss = (targetPrice, purchasePrice) => Math.round((((targetPrice - purchasePrice) / purchasePrice) * 100) );
+  const gainOrLoss = (targetPrice: number, purchasePrice: number) => Math.round((((targetPrice - purchasePrice) / purchasePrice) * 100) );
   
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
+
+      //NEXT_PUBLIC naming convention needs to be followed
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
       // Handle form submission, e.g., send data to an API
       try {
-        const response = await fetch('http://localhost:8080/api/emailAlerts', {
+        //const response = await fetch('http://localhost:8080/api/emailAlerts', {
+        const response = await fetch(`${apiUrl}/api/emailAlerts`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -125,7 +134,7 @@ export const EmailAlerts = ({ data }) =>  {
         }
 
         const result = await response.json();
-        console.log(result.message)
+        console.log(result)
 
       } catch (error) {
         console.error('Error:', error);
