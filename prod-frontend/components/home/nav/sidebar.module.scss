@@ -8,12 +8,13 @@
 .sideBar {
   background: var(--background-dark);
 
-  height: 100vh;
+  height: 110vh;
 
   position: sticky;
   top: 0px;
   left: 0px;
   z-index: 20;
+  font-size: var(--text-sm);
 
   display: flex;
   flex-direction: column;
@@ -29,7 +30,6 @@
     flex-shrink: 0;
 
     writing-mode: vertical-lr;
-    font-size: var(--text-sm);
     font-weight: 200;
     display: flex;
     align-items: center;
@@ -56,11 +56,10 @@
 }
 
 @media (max-width: 767px) {
-  .shrinkOnMobile {
-    max-width: 3.75rem; /* shrink on screens smaller than 768px */
-    background: "var(--background-dark)";
-  }
-
+    .sideBar{
+      max-width: 2.75rem; /* shrink on screens smaller than 768px */
+      font-size: 14px; /* shrink the font */
+    } 
 }
 
 .sideBar::-webkit-scrollbar {

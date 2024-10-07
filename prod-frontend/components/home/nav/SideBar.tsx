@@ -31,13 +31,13 @@ export const SideBar = () => {
       <motion.nav
         initial={{ x: -70 }}
         animate={{ x: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.8 }}
         className={styles.sideBar}
       >
         <motion.a
           initial={{ x: -70 }}
           animate={{ x: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
           href="#cryptoList"
           onClick={() => setSelected("cryptoList")}
           className={selected === "cryptoList" ? styles.selected : ""}
@@ -47,7 +47,7 @@ export const SideBar = () => {
         <motion.a
           initial={{ x: -70 }}
           animate={{ x: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           href="#chart"
           onClick={() => {
             setSelected("chart");

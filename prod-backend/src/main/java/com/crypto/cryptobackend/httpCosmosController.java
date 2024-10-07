@@ -21,9 +21,8 @@ public class httpCosmosController {
     private EmailRepository emailRepository;
 
     @GetMapping("/last-24")
-    public Flux<cryptoWrapperModel> getLast20Entries() {
-        return cosmosRepositoryData.findAll().take(24);
-        //return cosmosRepositoryData.findAll();
+    public Flux<cryptoWrapperModel> getEntries() {   //making TTL on cosmosdb
+        return cosmosRepositoryData.findAll();
     }
 
     @PostMapping("/emailAlerts")
