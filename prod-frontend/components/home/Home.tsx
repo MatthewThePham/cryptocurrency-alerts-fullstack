@@ -21,8 +21,8 @@ export const Home  = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //const response = await fetch(`${apiUrl}/api/last-24` // Adjust the API endpoint as necessary
-        const response = await fetch('http://localhost:8080/api/last-24'
+        const response = await fetch(`${apiUrl}/api/last-24` // Adjust the API endpoint as necessary
+        //const response = await fetch('http://localhost:8080/api/last-24'
           ,{method:'GET',
             headers:{Accept: 'application/json','Content-Type': 'application/json'}}); // Adjust the API endpoint as necessary
         if (!response.ok) {

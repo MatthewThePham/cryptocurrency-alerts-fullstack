@@ -119,8 +119,8 @@ export const EmailAlerts = ({ data }: Props) =>  {
 
       // Handle form submission, e.g., send data to an API
       try {
-        const response = await fetch('http://localhost:8080/api/emailAlerts', {
-        //const response = await fetch(`${apiUrl}/api/emailAlerts`, {
+        //const response = await fetch('http://localhost:8080/api/emailAlerts', {
+        const response = await fetch(`${apiUrl}/api/emailAlerts`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
